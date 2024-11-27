@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animations</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color:blanchedalmond;
+            margin: 0;
+            padding: 0;
+            height: 100vh; 
+            display: flex;
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+
+        }
+        
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 1000px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .animation {
+            margin: 20px;
+            padding: 20px;
+            width: 45%;  
+            height: 300px; 
+            border: 2px solid #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #a5a5a5;
+            position: relative;
+            overflow: hidden; 
+        }
+        
+        .moving-left-to-right, .moving-right-to-left, .bouncing-left-to-rights, .bouncing-left-to-right, .moving-upward, .moving-downward, .bouncing-up-and-down {
+            position: absolute;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .moving-left-to-right {
+            animation: moveLeftRight 3s infinite linear;
+        }
+        
+        .moving-right-to-left {
+            animation: bounceRightLeft 3s infinite ease-in-out;
+        }
+        
+        .bouncing-left-to-rights {
+            animation: bounceLeftRights 4s infinite ease-in-out;
+        }
+
+        .bouncing-left-to-right {
+            animation: bounceLeftRight 4s infinite ease-in-out;
+        }
+        
+        .moving-upward {
+            animation: moveUpward 3s infinite linear;
+        }
+        
+        .moving-downward {
+            animation: moveDownward 3s infinite linear;
+        }
+        
+        .bouncing-up-and-down {
+            animation: bounceUpDown 3s infinite ease-in-out;
+        }
+        
+        .box {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: bounce-horizontal 3s infinite, changeColor 3s infinite;
+        }
+        
+        .textsabox {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        @keyframes moveLeftRight {
+            0% { left:0%; } 
+            100% { left:100%; }
+        }     
+        
+        @keyframes bounceRightLeft {
+            0% { right:0%; } 
+            100% { right:100%; }
+        }
+
+        @keyframes bounceLeftRights {
+            0% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(220%); 
+            }
+            50% {
+                transform: translateX(0); 
+            }
+            75% {
+                transform: translateX(-220%); 
+            }
+            100% {
+                transform: translateX(0); 
+            }
+        }
+
+        @keyframes bounceLeftRight {
+            0% {
+                transform: translateX(0);
+                color: #ff0000;}
+            25% {
+                transform: translateX(110%); 
+                color: #ffff00;}
+            50% {
+                transform: translateX(0); 
+                color: #00ff00;}
+            75% {
+                transform: translateX(-110%); 
+                color: #0000ff;}
+            100% {
+                transform: translateX(0); 
+                color: #f0000f;}
+        }
+        
+        @keyframes moveUpward {
+            0% { top:100%; }
+            100% { top:-100%; }
+        }
+        
+        @keyframes moveDownward {
+            0% { top:-100%; }
+            100% { top:100%; }
+        }
+        
+        @keyframes bounceUpDown {
+            0%, 100% {top:0}
+            75% { top:75%; }
+        }
+        
+        @keyframes bounce-horizontal {
+            0% {
+                left: 0;
+                background-color: #ff0000;}
+            50% {
+                left: 80%;
+                background-color: #0033ff;}
+            100% {
+                left: 0;
+                background-color: #ff0000;}
+        }
+        
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center; 
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 10px; 
+        }
+        
+        button:disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="animation">
+            <div class="moving-left-to-right">Sarren Travy</div>
+        </div>
+
+        <div class="animation">
+            <div class="moving-right-to-left">Urriza</div>
+        </div>
+
+        <div class="animation">
+            <div class="bouncing-left-to-rights">DCPET 1-2</div>
+        </div>
+
+        <div class="animation">
+            <div class="bouncing-left-to-right">Mr. Nikkolai Andaya</div>
+        </div>
+
+        <div class="animation">
+            <div class="moving-upward">Pogi</div>
+        </div>
+
+        <div class="animation">
+            <div class="moving-downward">Naks Naman!</div>
+        </div>
+
+        <div class="animation">
+            <div class="bouncing-up-and-down">Hihi</div>
+        </div>
+
+        <div class="animation">
+            <div class="box">
+            <div class="textsabox">WANG!</div>
+        </div>
+    </div>
+    <div class="controls">
+        <button id="pause-btn">Pause</button>
+        <button id="play-btn">Play</button>
+    </div>
+    
+    <script>
+        const pauseBtn = document.getElementById("pause-btn");
+        const playBtn = document.getElementById("play-btn");
+        const animations = document.querySelectorAll(".animation > div");
+
+        function pauseAnimations() {
+            animations.forEach(anim => {
+                anim.style.animationPlayState = "paused";
+            });
+            pauseBtn.disabled = true; 
+            playBtn.disabled = false; 
+        }
+
+
+        function playAnimations() {
+            animations.forEach(anim => {
+               anim.style.animationPlayState = "running";
+            });
+            pauseBtn.disabled = false; 
+            playBtn.disabled = true; 
+        }
+        pauseAnimations(); 
+        pauseBtn.addEventListener("click", pauseAnimations);
+        playBtn.addEventListener("click", playAnimations);
+    </script>
+</body>
+</html>
